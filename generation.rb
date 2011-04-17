@@ -28,6 +28,8 @@ class Generation
 	def test
 		@generation_members.each_with_index do |member, index|
 			member[:distance], member[:time] = member[:keylist].test
+			puts "#{index}. Distance: #{member[:distance]} - Time: #{member[:time]}"
+			`echo "#{"#{index}. Distance: #{member[:distance]} - Time: #{member[:time]}"}" >> test.log`
 		end
 	end
 
