@@ -20,5 +20,6 @@ class QWOP
 	end
 end
 
+`echo > test.log`
 qwop = QWOP.new
 qwop.start
