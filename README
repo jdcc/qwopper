@@ -1,0 +1,23 @@
+Dependencies:
+	>=ruby1.9.1
+	xdotool
+	xwd
+	convert
+	gocr
+	xlib-devel (for making grabpixel)
+	google-chrome
+	1440x900 resolution
+
+To run:
+	cd qwopper
+	make
+	ruby1.9.1 qwop.rb
+
+Notes:
+	Theoretically, xlib makes it possible to run this in the background,
+	but in reality, most programs (Chrome included) ignore the keypresses
+	send unless they're in the foreground.  (See "man xdotool")
+
+TODO:
+	Make breeding function work so distance goes beyond ~5 meters
+	Make resolution independent 
