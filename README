@@ -1,3 +1,12 @@
+Project Description:
+	This is really an exercise in learning Ruby (otherwise, Ruby would not 
+	have been picked, as it's not well suited to this kind of application).
+	Apart from that, it's goal is to use a genetic algorithm to create
+	series of keypresses that beat QWOP (http://www.foddy.net/Athletics.html).
+
+Status:
+	Can get 4-5 metres consistently after 5-10 generations, then peters out.
+ 
 Dependencies:
 	>=ruby1.9.1
 	xdotool
@@ -21,3 +30,4 @@ Notes:
 TODO:
 	Make breeding function work so distance goes beyond ~5 meters
 	Make resolution independent 
+	Improve consistency
