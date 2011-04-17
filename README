@@ -5,7 +5,8 @@ Project Description:
 	series of keypresses that beat QWOP (http://www.foddy.net/Athletics.html).
 
 Status:
-	Can get 4-5 metres consistently after 5-10 generations, then peters out.
+	Can get 4-5 metres consistently after 5-10 generations, then peters out
+	due to lack of consistency.
  
 Dependencies:
 	>=ruby1.9.1
@@ -15,7 +16,7 @@ Dependencies:
 	gocr
 	xlib-devel (for making grabpixel)
 	google-chrome
-	1440x900 resolution
+	1440x900 resolution (ridiculous)
 
 To run:
 	cd qwopper
@@ -24,8 +25,8 @@ To run:
 
 Notes:
 	Theoretically, xlib makes it possible to run this in the background,
-	but in reality, most programs (Chrome included) ignore the keypresses
-	send unless they're in the foreground.  (See "man xdotool")
+	but most programs (Chrome included) ignore sent keypresses
+	unless they're running in the foreground.  (See "man xdotool")
 
 TODO:
 	Make breeding function work so distance goes beyond ~5 meters
