@@ -28,7 +28,14 @@ Notes:
 	but most programs (Chrome included) ignore sent keypresses
 	unless they're running in the foreground.  (See "man xdotool")
 
+	Before a new trial is started, the program waits for a certain color
+	pixel to appear near the runner's jawline (to improve consistency).
+	If the pixel doesn't appear within a certain amount of time, odds
+	are it's not going to, so the runner purposely falls down ("I Quit.").
+
 TODO:
 	Make breeding function work so distance goes beyond ~5 meters
 	Make resolution independent 
 	Improve consistency
+	Make breeding keylists seamless (detect down keys in previous gen.)
+	Add time into the scoring function

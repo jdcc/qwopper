@@ -39,18 +39,19 @@ class KeyList
 
 	def test
 		Utils.prepare_applet
-		browser_window_id = `xdotool search --name "QWOP - Google Chrome"`.strip
+		browser_window_id = `xdotool search --name "#{Utils::WINDOW_NAME}"`.strip
 		@keylist.each_with_index do |keys, time|
 			keys.each do |key|
 				command = (key[1] == 'u' ? 'keyup' : 'keydown')
 				`xdotool #{command + ' --window ' + browserWindowId + ' --delay 0 ' + key[0]}`
 			end
-			pixel_color = `./grabpixel "QWOP - Google Chrome" #{FELL_PIXEL_X FELL_PIXEL_Y}`.strip
+			pixel_color = `./grabpixel "#{Utils::WINDOW_NAME}" #{FELL_PIXEL_X FELL_PIXEL_Y}`.strip
 			if  pixel_color == FELL_PIXEL_COLOR then
-				distance = `xdotool search -name "QWOP - Google Chrome" windowactivate \
-					&& xwd -name "QWOP - Google Chrome" -out "Distance.xwd" \
+				distance = `xdotool search -name "#{Utils::WINDOW_NAME}" windowactivate \
+					&& xwd -name "#{Utils::WINDOW_NAME}" -out "Distance.xwd" \
 					&& convert Distance.xwd -negate -crop '#{FELL_DIST_IMAGE}' Distance#{time}.pnm \
 					&& rm -f Distance.xwd && gocr -u "1" -C "--0-9.metrs " Distance#{time}.pnm`.gsub!(' ','').to_f
+				`rm Distance#{time}.pnm`
 				return distance, time
 			end
 			sleep(TIME_BETWEEN_BINS)
