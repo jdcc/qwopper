@@ -27,6 +27,7 @@ module Utils
 			red, green, blue = head_pixel.split(' ')
 			count += 1
 			if count == 30 then
+				puts 'I Quit.'
 				`xdotool keydown o`
 				sleep(2)
 				`xdotool key o space`
