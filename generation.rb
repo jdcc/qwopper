@@ -42,14 +42,9 @@ class Generation
 		best_member = self.get_best
 		prng = Random.new
 		new_keylists = []
-		GENERATION_SIZE.times do |i|
-			base_keylist = best_member[:keylist].select do |time, keys|
-				if time < (best_member[:time] - prng.rand(BINS_TO_DROP_LOWER..BINS_TO_DROP_UPPER)) then
-					true
-				end
-			end
+		GENERATION_SIZE.times do
+			base_keylist = best_member[:keylist].keylist[0, best_member[:time] - prng.rand(BINS_TO_DROP_LOWER..[1, BINS_TO_DROP_UPPER].max)]
 			new_keylists << KeyList.new(base_keylist)
-			@generation_members[i] = {:keylist=>base_keylist, :distance=>0.0, :time=>0, :score=>0}
 		end
 		return self.class.new(new_keylists)
 	end
