@@ -9,11 +9,16 @@ class KeyList
 	FELL_DIST_IMAGE = '133x25+643+432'
 	TIME_BETWEEN_BINS = 0.01
 
-	attr_reader :keylist
+	attr_reader :keylist, :time, :distance, :score
 
 	def initialize(keylist = [])
-		@keylist = keylist
 		@keys = {'q'=>true,'w'=>true,'o'=>true,'p'=>true} #true == key is up
+
+		@keylist = keylist
+		@time = 0
+		@distance = 0.0
+		@score = 0
+
 		if @keylist.length < LIST_LENGTH then
 			self.build
 		end
@@ -49,6 +54,7 @@ class KeyList
 					&& convert Distance.xwd -negate -crop '#{FELL_DIST_IMAGE}' Distance#{time}.pnm \
 					&& rm -f Distance.xwd && gocr -u "1" -C "--0-9.metrs " Distance#{time}.pnm`.gsub!(' ','').to_f
 				`rm Distance#{time}.pnm`
+				@distance, @time = distance, time
 				return distance, time
 			end
 			sleep(TIME_BETWEEN_BINS)
