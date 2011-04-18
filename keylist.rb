@@ -3,19 +3,17 @@ include Utils
 
 class KeyList
 	LIST_LENGTH = 10000
-	PROB_LOWER_BOUND = 0.005
-	PROB_UPPER_BOUND = 0.015
+	PROB_LOWER_BOUND = 0.01
+	PROB_UPPER_BOUND = 0.02
 
-	FELL_PIXEL = '580 410'
-	FELL_PIXEL_COLOR = '237 237 237'
 	FELL_DIST_IMAGE = '133x25+643+432'
 	TIME_BETWEEN_BINS = 0.01
 
 	attr_reader :keylist
 
 	def initialize(keylist = [])
-		@keys = {'q'=>true,'w'=>true,'o'=>true,'p'=>true} #true == key is up
 		@keylist = keylist
+		@keys = {'q'=>true,'w'=>true,'o'=>true,'p'=>true} #true == key is up
 		if @keylist.length < LIST_LENGTH then
 			self.build
 		end
@@ -44,8 +42,8 @@ class KeyList
 				command = (key[1] == 'u' ? 'keyup' : 'keydown')
 				`xdotool #{command + ' --window ' + browser_window_id + ' --delay 0 ' + key[0]}`
 			end
-			pixel_color = `./grabpixel "#{Utils::WINDOW_NAME}" #{FELL_PIXEL}`.strip
-			if pixel_color == FELL_PIXEL_COLOR then
+			pixel_color = `./grabpixel "#{Utils::WINDOW_NAME}" #{Utils::FELL_PIXEL}`.strip
+			if pixel_color == Utils::FELL_PIXEL_COLOR then
 				distance = `xdotool search -name "#{Utils::WINDOW_NAME}" windowactivate \
 					&& xwd -name "#{Utils::WINDOW_NAME}" -out "Distance.xwd" \
 					&& convert Distance.xwd -negate -crop '#{FELL_DIST_IMAGE}' Distance#{time}.pnm \
