@@ -43,7 +43,9 @@ class Generation
 		prng = Random.new
 		new_keylists = []
 		GENERATION_SIZE.times do
-			base_keylist = best_member[:keylist].keylist[0, best_member[:time] - prng.rand(BINS_TO_DROP_LOWER..[1, BINS_TO_DROP_UPPER].max)]
+			#remove all the unused keypresses, plus some random amount capped at 30%, to use as a basis for the next generation
+			new_length = [best_member[:time] - prng.rand(BINS_TO_DROP_LOWER..BINS_TO_DROP_UPPER), (best_member[:time] * 0.3).round].min
+			base_keylist = best_member[:keylist].keylist[0, new_length]
 			new_keylists << KeyList.new(base_keylist)
 		end
 		return self.class.new(new_keylists)
