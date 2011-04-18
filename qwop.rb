@@ -11,10 +11,10 @@ class QWOP
 			`echo "#{'Generation ' + i.to_s + ':'}" >> test.log`
 			g.test
 			best = g.get_best
-			puts 'Best Distance: ' + best[:distance].to_s
-			`echo "#{'Best Distance: ' + best[:distance].to_s}" >> test.log`
+			puts 'Best Distance: ' + best.distance.to_s
+			`echo "#{'Best Distance: ' + best.distance.to_s}" >> test.log`
 			CONSISTENCY_TESTS.times do 
-				distance, time = best[:keylist].test
+				distance, time = best.test
 				puts distance
 				`echo "#{distance}" >> test.log`
 			end
