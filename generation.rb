@@ -1,7 +1,7 @@
 require "./keylist.rb"
 
 class Generation
-	GENERATION_SIZE = 4
+	GENERATION_SIZE = 40
 	BINS_TO_DROP_LOWER = 1
 	BINS_TO_DROP_UPPER = 100
 	MIN_PERCENT_RETAINED = 0.7
