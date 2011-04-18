@@ -15,8 +15,9 @@ Dependencies:
 	convert
 	gocr
 	xlib-devel (for making grabpixel)
-	google-chrome
+	google-chrome (with no bookmark bar)
 	1440x900 resolution (ridiculous)
+	probably a few other things because pixel locations are hardcoded
 
 To run:
 	cd qwopper
