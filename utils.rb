@@ -31,12 +31,34 @@ module Utils
 			red, green, blue = head_pixel.split(' ')
 			count += 1
 			if count == 30 then
-				puts 'I Quit.'
+				$stderr.puts 'I Quit.'
 				`xdotool keydown o`
 				sleep(2)
 				`xdotool key o space`
 				count = 0
 			end
 		end
+	end
+
+	def variance (population)
+		n = 0
+		mean = 0.0
+		s = 0.0
+		population.each { |x|
+			n = n + 1
+			delta = x - mean
+			mean = mean + (delta / n)
+			s = s + delta * (x - mean)
+		}
+		return s / n
+	end
+
+	def stddev (population)
+		return Math.sqrt (variance(population))
+	end
+	
+	def log (message)
+		puts message
+		`echo "#{message}" >> test.log`
 	end
 end
