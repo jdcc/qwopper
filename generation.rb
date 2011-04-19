@@ -1,10 +1,14 @@
 require "./keylist.rb"
+require "./utils.rb"
+include Utils
 
 class Generation
-	GENERATION_SIZE = 40
-	BINS_TO_DROP_LOWER = 1
-	BINS_TO_DROP_UPPER = 100
+	GENERATION_SIZE = 6
+	BINS_TO_DROP_LOWER = 20
+	BINS_TO_DROP_UPPER = 150
 	MIN_PERCENT_RETAINED = 0.7
+	CONSISTENCY_TESTS = 3
+	NO_TO_TEST_FOR_CONSISTENCY = 2
 
 	attr_reader :generation_members
 
@@ -25,13 +29,32 @@ class Generation
 	def test
 		@generation_members.each_with_index do |member, index|
 			member.test
-			puts "#{index}. Distance: #{member.distance} - Time: #{member.time}"
-			`echo "#{"#{index}. Distance: #{member.distance} - Time: #{member.time}"}" >> test.log`
+			Utils::log "#{index+1}/#{GENERATION_SIZE} - Distance: #{member.distance} - Time: #{member.time}"
+		end
+
+		self.sort!
+		puts "Testing top #{NO_TO_TEST_FOR_CONSISTENCY} for consistency..."
+		NO_TO_TEST_FOR_CONSISTENCY.times do |i|
+			member = @generation_members[-i-1].dup
+			Utils::log "Testing keylist with distance of #{member.distance}..."
+			distances = [member.distance]
+			CONSISTENCY_TESTS.times do
+				distance, time = member.test
+				distances << distance
+				Utils::log "Distance: #{distance.to_s}"
+			end
+			@generation_members[-i-1].score = (50 * member.distance / Utils::stddev(distances)).round
+			Utils::log "Score: #{@generation_members[-i-1].score}"
 		end
 	end
 
-	def get_best
+	def sort!
 		@generation_members.sort_by! { |member| member.distance }
+		@generation_members.sort_by! { |member| member.score }
+	end
+
+	def get_best
+		self.sort!
 		return @generation_members.last
 	end
 
@@ -40,8 +63,8 @@ class Generation
 		prng = Random.new
 		new_keylists = []
 		GENERATION_SIZE.times do
-			#remove all the unused keypresses, plus some random amount capped at 30%, to use as a basis for the next generation
-			new_length = [best_member.time - prng.rand(BINS_TO_DROP_LOWER..BINS_TO_DROP_UPPER), (best_member.time * MIN_PERCENT_RETAINED).round].max
+			#remove all the unused bins, plus some random amount capped at 100 bins, to use as a basis for the next generation
+			new_length = best_member.time - prng.rand(BINS_TO_DROP_LOWER..[BINS_TO_DROP_UPPER, best_member.time - 1].min)
 			base_keylist = best_member.keylist[0, new_length]
 			new_keylists << KeyList.new(base_keylist)
 		end
