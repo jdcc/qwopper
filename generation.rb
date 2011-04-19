@@ -3,12 +3,12 @@ require "./utils.rb"
 include Utils
 
 class Generation
-	GENERATION_SIZE = 6
+	GENERATION_SIZE = 40
 	BINS_TO_DROP_LOWER = 20
 	BINS_TO_DROP_UPPER = 150
-	MIN_PERCENT_RETAINED = 0.7
-	CONSISTENCY_TESTS = 3
-	NO_TO_TEST_FOR_CONSISTENCY = 2
+	CONSISTENCY_TESTS = 4
+	NO_TO_TEST_FOR_CONSISTENCY = 4
+	SCORE_MULTIPLIER = 50
 
 	attr_reader :generation_members
 
@@ -43,7 +43,7 @@ class Generation
 				distances << distance
 				Utils::log "Distance: #{distance.to_s}"
 			end
-			@generation_members[-i-1].score = (50 * member.distance / Utils::stddev(distances)).round
+			@generation_members[-i-1].score = (SCORE_MULTIPLIER * member.distance / Utils::stddev(distances)).round
 			Utils::log "Score: #{@generation_members[-i-1].score}"
 		end
 	end
