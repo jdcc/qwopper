@@ -1,23 +1,17 @@
 require "./generation.rb"
+require "./utils.rb"
+include Utils
 
 class QWOP 
 	NO_GENERATIONS = 25
-	CONSISTENCY_TESTS = 5
 
 	def start
 		g = Generation.new
+		Utils::log "Testing #{NO_GENERATIONS} generations..."
 		NO_GENERATIONS.times do |i|
-			puts 'Generation ' + i.to_s + ':'
-			`echo "#{'Generation ' + i.to_s + ':'}" >> test.log`
+			Utils::log "Testing generation #{(i+1).to_s}..."
 			g.test
-			best = g.get_best
-			puts 'Best Distance: ' + best.distance.to_s
-			`echo "#{'Best Distance: ' + best.distance.to_s}" >> test.log`
-			CONSISTENCY_TESTS.times do 
-				distance, time = best.test
-				puts distance
-				`echo "#{distance}" >> test.log`
-			end
+			Utils::log 'Best Candidate: ' + g.get_best.distance.to_s
 			g = g.breed
 		end
 	end
