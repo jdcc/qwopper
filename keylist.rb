@@ -9,7 +9,8 @@ class KeyList
 	FELL_DIST_IMAGE = '133x25+643+432'
 	TIME_BETWEEN_BINS = 0.01
 
-	attr_reader :keylist, :time, :distance, :score
+	attr_reader :keylist, :time, :distance
+	attr_accessor :score
 
 	def initialize(keylist = [])
 		@keys = {'q'=>true,'w'=>true,'o'=>true,'p'=>true} #true == key is up
